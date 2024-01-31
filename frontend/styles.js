@@ -4,12 +4,12 @@ import { StyleSheet } from 'react-native';
     container: {
       flex: 1,
       backgroundColor: '#050505',
+      paddingTop: 10,
     },
     textStyle: {
       color: '#fff',
       textAlign: 'center',
       fontSize: 30,
-      marginBottom: 10,
       textShadowColor: '#fff',
       textShadowRadius: 15,
      fontFamily: 'lexend-extra-light',
@@ -18,7 +18,6 @@ import { StyleSheet } from 'react-native';
       color: '#fff',
       textAlign: 'center',
       fontSize: 30,
-      marginBottom: 10,
       textShadowColor: '#fff',
       textShadowRadius: 15,
       fontFamily: 'lexend-bold',
@@ -27,6 +26,7 @@ import { StyleSheet } from 'react-native';
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
+      marginBottom: '20em',
     },
     logo: {
       height: 180,
@@ -44,8 +44,24 @@ import { StyleSheet } from 'react-native';
       width: '100%',
       alignContent: 'center',
       alignItems: 'center',
-      paddingTop: 100,
-    }
+      paddingTop: 70,
+    },
+    version: {
+      color: '#aaa',
+      alignSelf: 'flex-end',
+      paddingRight: 30,
+      paddingTop: 50,
+      position: 'absolute',
+      fontFamily: 'lexend-light',
+    },
+    brand: {
+      color: '#000',
+      fontSize: 18,
+      fontFamily: 'lexend-extra-light',
+      position: 'absolute',
+      alignSelf: 'center',
+      bottom: 35,
+    },
   });
 
 export default styles;

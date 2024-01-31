@@ -8,20 +8,17 @@ const LoginButton = ({ displayText, IconURI }) => {
     
     const [loaded] = useFonts({
         'lexend': require('./assets/Fonts/Lexend/static/Lexend-Light.ttf'),
-
     });
     
     if (!loaded) {
         return null;
     }
-        
-    console.log(IconURI);
 
     return (
         <TouchableHighlight underlayColor='rgba(20,20,20,0.25)' style={styles.buttonContainer} onPress={() => alert('Login Button pressed')}>
             <View style={styles.textWrapper} >
                 <Text style={styles.button}>{displayText}</Text>
-                <Image style={styles.iconStyle} source={require('./assets/icons8-add-user-male-100.png')} />
+                <Image style={styles.iconStyle} source={IconURI} />
             </View>
         </TouchableHighlight>
     );
@@ -35,11 +32,11 @@ const styles = StyleSheet.create({
         padding: 10,
         //Its for IOS
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: .3,
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: .2,
 
         // its for android 
-        elevation: 5,
+        elevation: 10,
         position: 'relative',
 
         width: '65%',
@@ -51,7 +48,6 @@ const styles = StyleSheet.create({
         paddingLeft: 40,
         padding: 20,
         fontSize: 30,
-        fontWeight: 100,
         fontFamily: 'lexend',
     },
     textWrapper: {
