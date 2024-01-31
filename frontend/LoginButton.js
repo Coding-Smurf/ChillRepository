@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
 
 
-const LoginButton = ({ displayText, IconURI }) => {
+const LoginButton = ({ displayText, IconURI, clickHandler }) => {
     
     const [loaded] = useFonts({
         'lexend': require('./assets/Fonts/Lexend/static/Lexend-Light.ttf'),
@@ -15,7 +15,7 @@ const LoginButton = ({ displayText, IconURI }) => {
     }
 
     return (
-        <TouchableHighlight underlayColor='rgba(20,20,20,0.25)' style={styles.buttonContainer} onPress={() => alert('Login Button pressed')}>
+        <TouchableHighlight underlayColor='rgba(20,20,20,0.25)' style={styles.buttonContainer} onPress={clickHandler}>
             <View style={styles.textWrapper} >
                 <Text style={styles.button}>{displayText}</Text>
                 <Image style={styles.iconStyle} source={IconURI} />
