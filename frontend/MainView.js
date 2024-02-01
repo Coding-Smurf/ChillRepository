@@ -10,6 +10,7 @@ export default function MainView({ navigation }) {
 
   const [loaded] = useFonts({
     'lexend-light': require('./assets/Fonts/Lexend/static/Lexend-Light.ttf'),
+    'lexend-regular': require('./assets/Fonts/Lexend/static/Lexend-Regular.ttf'),
     'lexend-bold': require('./assets/Fonts/Lexend/static/Lexend-Bold.ttf'),
     'lexend-extra-light': require('./assets/Fonts/Lexend/static/Lexend-ExtraLight.ttf')
   });
@@ -36,7 +37,7 @@ export default function MainView({ navigation }) {
             <Text style={styles.textStyleBold}>ALPACA! </Text>
           </View>
           <View style={styles.front}>
-        <LoginButton displayText="Login" IconURI={LoginIcon} clickHandler={GoToLogin} />
+        <LoginButton displayText="Login" IconURI={LoginIcon} clickHandler={GoToLogin} /> 
         <LoginButton displayText="Register" IconURI={RegIcon} clickHandler={alertTest2} />
           </View>
           <Text style={styles.brand}>ALPACA © 2024</Text>
