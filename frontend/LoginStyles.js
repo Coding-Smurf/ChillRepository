@@ -74,6 +74,10 @@ const LoginStyles = StyleSheet.create({
         fontSize: 20,
         paddingLeft: 20,
         paddingRight: 20,
+        borderColor: '#9992',
+        borderWidth: 1,
+        borderRadius: 30,
+
 
     },
     innerShadow: {
