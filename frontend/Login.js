@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableHighlight,
   Animated,
+  Image
 } from 'react-native';
 import LoginStyles from './LoginStyles';
 import InsetShadow from 'react-native-inset-shadow';
@@ -55,7 +56,12 @@ const Login = ({ navigation }) => {
 
   return (
     <SafeAreaView style={LoginStyles.container}>
-      <Text style={LoginStyles.textStyle}>Login</Text>
+      <View style={LoginStyles.header}>
+        <TouchableHighlight style={LoginStyles.backIconWrapper} onPress={() => navigation.navigate('MainView')}>
+          <Image style={LoginStyles.backIcon} source={require('./assets/icons8-left-arrow-100.png') } />
+        </TouchableHighlight>
+        <Text style={LoginStyles.textStyle}>Login</Text>
+      </View>
       <TouchableWithoutFeedback onPress={() => { dismissKeyboard(); setPassFocus(false) }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === !'ios' ? 'height' : 'none'}

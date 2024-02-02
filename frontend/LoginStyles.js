@@ -6,10 +6,22 @@ const LoginStyles = StyleSheet.create({
         backgroundColor: '#050505',
         paddingTop: 10,
     },
-    textStyle: {
+    header:{
         marginTop: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    backIcon: {
+        width: 35,
+        height: 35,
+    },
+    backIconWrapper: {
+        position: 'absolute',
+        left: '10%',
+    },
+    textStyle: {
         color: '#fff',
-        textAlign: 'center',
         fontSize: 36,
         fontFamily: 'lexend-regular',
     },
@@ -113,6 +125,7 @@ const LoginStyles = StyleSheet.create({
         fontSize: 30,
         fontFamily: 'lexend-regular',
     },
+   
 });
 
 export default LoginStyles;
