@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Text,
   KeyboardAvoidingView,
@@ -6,13 +6,11 @@ import {
   SafeAreaView,
   View,
   TextInput,
-  Button,
   TouchableWithoutFeedback,
   Keyboard,
   TouchableHighlight,
-  Image,
+  Animated,
 } from 'react-native';
-import { useState } from 'react';
 import LoginStyles from './LoginStyles';
 import InsetShadow from 'react-native-inset-shadow';
 
@@ -20,38 +18,85 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passFocus, setPassFocus] = useState(false);
+  const inputAnimation = useRef(new Animated.Value(0)).current;
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
+  const handleFocus = () => {
+    setPassFocus(true);
+    Animated.timing(inputAnimation, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const handleBlur = () => {
+    setPassFocus(false);
+    Animated.timing(inputAnimation, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const inputStyle = {
+    transform: [
+      {
+        translateY: inputAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, -50], // You can adjust the translateY value for the desired animation
+        }),
+      },
+    ],
+  };
+
   return (
-    <SafeAreaView style={LoginStyles.background}>
-      {/* Login text, top part of the view */}
-      <View style={LoginStyles.loginContainer}>
-        <Image style={LoginStyles.backArrow} source={require('./assets/icons8-left-arrow-100.png')} />
-        <Text style={LoginStyles.loginText}>Login</Text>
-      </View>
+    <SafeAreaView style={LoginStyles.container}>
+      <Text style={LoginStyles.textStyle}>Login</Text>
+      <TouchableWithoutFeedback onPress={() => { dismissKeyboard(); setPassFocus(false) }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === !'ios' ? 'height' : 'none'}
+          style={LoginStyles.front}
+        >
+          <Animated.View style={[LoginStyles.inputView, inputStyle]}>
+            <Text style={LoginStyles.labelInput}>Username</Text>
+            <InsetShadow containerStyle={LoginStyles.innerShadow} shadowRadius={4} shadowOpacity={0.4}>
+              <TextInput
+                style={LoginStyles.textInput}
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+              />
+            </InsetShadow>
+            <Text style={LoginStyles.labelInput}>Password</Text>
+            <InsetShadow containerStyle={LoginStyles.innerShadow} shadowRadius={4} shadowOpacity={0.4}>
 
-      {/* Layout of the buttons, middle display*/}
-      <View>
-        <Text></Text>
-        <TextInput />
-        <Text></Text>
-        <TextInput />
-        <Button title='Submit' />
-      </View>
-
-      {/* Brand text, bottom of display*/}
-      <View>
-        <Text>ALPACA © 2024</Text>
-      </View>
+              <TextInput
+                style={LoginStyles.textInput}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                secureTextEntry={true}
+              />
+            </InsetShadow>
+            <TouchableHighlight style={LoginStyles.button} onPress={() => {
+              checkLogin();
+              navigation.navigate('MainView');
+            }}>
+              <Text style={LoginStyles.buttonText}>Submit</Text>
+            </TouchableHighlight>
+          </Animated.View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+      <Text style={LoginStyles.brand}>ALPACA © 2024</Text>
     </SafeAreaView>
   );
 
-
   function checkLogin() {
-    //fetch the backend API to check the login credentials
+    // Fetch the backend API to check the login credentials
     fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
@@ -59,53 +104,10 @@ const Login = ({ navigation }) => {
       },
       body: JSON.stringify({
         username: username,
-        password: password
-      })
-    })
+        password: password,
+      }),
+    });
   }
 };
 
 export default Login;
-
-
-
-
-
-
-/*<SafeAreaView style={LoginStyles.container}>
-  <Text style={LoginStyles.textStyle}>Login</Text>
-  <TouchableWithoutFeedback onPress={dismissKeyboard}>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === !'ios' ? 'height': 'none'}
-      style={LoginStyles.front}
-    >
-      <View style={passFocus ? LoginStyles.inputViewFocus : LoginStyles.inputView}>
-        <Text style={LoginStyles.labelInput}>Username</Text>
-        <InsetShadow containerStyle={LoginStyles.innerShadow} shadowRadius={4} shadowOpacity={0.4}>
-          <TextInput
-            style={LoginStyles.textInput}
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-          />
-        </InsetShadow>
-        <Text style={LoginStyles.labelInput}>Password</Text>
-        <InsetShadow containerStyle={LoginStyles.innerShadow} shadowRadius={4} shadowOpacity={0.4}>
-          <TextInput
-            style={LoginStyles.textInput}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            onFocus={() => setPassFocus(true)}
-            onBlur={() => setPassFocus(false)}
-            secureTextEntry={true}
-          />
-        </InsetShadow>
-        <TouchableHighlight style={LoginStyles.button} onPress={() =>  
-            navigation.navigate('MainView')
-        }>
-            <Text style={LoginStyles.buttonText}>Submit</Text>
-        </TouchableHighlight>
-      </View>
-    </KeyboardAvoidingView>
-  </TouchableWithoutFeedback>
-  <Text style={LoginStyles.brand}>ALPACA © 2024</Text>
-</SafeAreaView>*/
