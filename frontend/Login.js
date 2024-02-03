@@ -23,7 +23,7 @@ const Login = ({ navigation }) => {
   const inputAnimation = useRef(new Animated.Value(0)).current;
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const sha256 = require('js-sha256').sha256;
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -75,12 +75,16 @@ const Login = ({ navigation }) => {
       const resUsername = data[0].username;
       const resPassword = data[0].password;
 
+      const hashedPassword = sha256(password);
+
+      console.log('Hashed Password: \t', hashedPassword);
+      console.log('ResPassword: \t', resPassword);
+
       //if they are correct, navigate to the main view
-      if (username === resUsername && password === resPassword) {
+      if (username === resUsername && hashedPassword === resPassword) {
         navigation.navigate('MainView');
       } else {
         //if they are incorrect, display an error message
-        alert('Incorrect username or password');
         setError(true);
       }
 
