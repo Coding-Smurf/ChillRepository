@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import LoginStyles from './LoginStyles';
 import InsetShadow from 'react-native-inset-shadow';
+import App from './App';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -77,12 +78,12 @@ const Login = ({ navigation }) => {
 
       const hashedPassword = sha256(password);
 
-      console.log('Hashed Password: \t', hashedPassword);
-      console.log('ResPassword: \t', resPassword);
-
       //if they are correct, navigate to the main view
       if (username === resUsername && hashedPassword === resPassword) {
-        navigation.navigate('MainView');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MainNavigation' }],
+        })
       } else {
         //if they are incorrect, display an error message
         setError(true);
@@ -139,7 +140,7 @@ const Login = ({ navigation }) => {
               </TouchableHighlight>}
 
             </InsetShadow>
-
+            
 
             <TouchableHighlight style={LoginStyles.button} onPress={() => {
               checkLogin();
@@ -158,7 +159,6 @@ const Login = ({ navigation }) => {
       </View>}
 
     </SafeAreaView>
-
   );
 };
 

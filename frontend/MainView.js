@@ -21,7 +21,8 @@ export default function MainView({ navigation }) {
 
   const GoToLogin = () => {
     navigation.navigate('Login');
-  };
+  }
+
 
   const alertTest2 = () => {
     //navigation.navigate('Register');
