@@ -6,7 +6,7 @@ const LoginStyles = StyleSheet.create({
         backgroundColor: '#050505',
         paddingTop: 10,
     },
-    header:{
+    header: {
         marginTop: 50,
         flexDirection: 'row',
         alignItems: 'center',
@@ -89,6 +89,8 @@ const LoginStyles = StyleSheet.create({
         borderColor: '#9992',
         borderWidth: 1,
         borderRadius: 30,
+        borderRightColor: 'transparent',
+        width: '90%',
 
 
     },
@@ -99,6 +101,9 @@ const LoginStyles = StyleSheet.create({
         right: false,
         borderBottomWidth: 0.1,
         marginBottom: 30,
+        borderColor: '#9997',
+        borderWidth: 1,
+        flexDirection: 'row',
     },
     brand: {
         color: '#000',
@@ -125,7 +130,16 @@ const LoginStyles = StyleSheet.create({
         fontSize: 30,
         fontFamily: 'lexend-regular',
     },
-   
+    eyeIcon: {
+        width: 35,
+        height: 35,
+    },
+    eyeIconWrapper: {
+        justifyContent: 'center',
+        left: -15,
+    },
+
+
 });
 
 export default LoginStyles;

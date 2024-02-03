@@ -19,6 +19,7 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passFocus, setPassFocus] = useState(false);
+  const [isPassVisible, setIsPassVisible] = useState(false);
   const inputAnimation = useRef(new Animated.Value(0)).current;
 
   const dismissKeyboard = () => {
@@ -58,7 +59,7 @@ const Login = ({ navigation }) => {
     <SafeAreaView style={LoginStyles.container}>
       <View style={LoginStyles.header}>
         <TouchableHighlight style={LoginStyles.backIconWrapper} onPress={() => navigation.navigate('MainView')}>
-          <Image style={LoginStyles.backIcon} source={require('./assets/icons8-left-arrow-100.png') } />
+          <Image style={LoginStyles.backIcon} source={require('./assets/icons8-left-arrow-100.png')} />
         </TouchableHighlight>
         <Text style={LoginStyles.textStyle}>Login</Text>
       </View>
@@ -85,8 +86,13 @@ const Login = ({ navigation }) => {
                 value={password}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                secureTextEntry={true}
+                secureTextEntry={!isPassVisible && true}
               />
+              {/* This Touchable highlight allows the user to hide/unhide their password to make sure they type it right */}
+              {passFocus && <TouchableHighlight underlayColor='rgba(20,20,20,0)' style={LoginStyles.eyeIconWrapper} onPress={() => setIsPassVisible(!isPassVisible)}>
+                <Image style={LoginStyles.eyeIcon} source={isPassVisible ? require('./assets/icons8-eye-96.png') : require('./assets/icons8-invisible-90.png')} />
+              </TouchableHighlight>}
+
             </InsetShadow>
             <TouchableHighlight style={LoginStyles.button} onPress={() => {
               checkLogin();
