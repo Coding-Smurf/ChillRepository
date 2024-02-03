@@ -1,10 +1,10 @@
-import { View } from "react-native";
+import { SafeAreaView, Button } from "react-native";
 
 const Recipes = () => {
     return (
-        <View>
-            
-        </View>
+        <SafeAreaView style={{ height: '100%' }}>
+            <Button title="This Recipes" onPress={() => { navigation.replace("MainView") }} />
+        </SafeAreaView>
     );
 }
 export default Recipes;

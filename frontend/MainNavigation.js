@@ -9,11 +9,35 @@ import ReciperViewer from './RecipeViewer';
 import AddProduct from './AddProduct';
 import UserSettings from './UserSettings';
 import MainView from './MainView';
-import { Animated, Image, StyleSheet } from 'react-native';
+import { Animated, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
 
-const bottomTabs = createBottomTabNavigator(); 
+const screens = [
+    {
+        name: 'Scan',
+        component: AddProduct,
+        icon: require('./assets/icons8-barcode-64.png'),
+    },
+    {
+        name: 'Products',
+        component: Products,
+        icon: require('./assets/icons8-cuenco-de-arroz-96 (1).png'),
+    },
+    {
+        name: 'Recipes',
+        component: Recipes,
+        icon: require('./assets/icons8-libro-de-cocina-100.png'),
+    },
+    {
+        name: 'UserSettings',
+        component: UserSettings,
+        icon: require('./assets/icons8-ajustes-144.png'),
+    },
+];
+
+
+const bottomTabs = createBottomTabNavigator();
 
 const selectedColor = '#fff';
 const unselectedColor = 'black';
@@ -42,6 +66,8 @@ const screenOptionStyle = {
         paddingTop: 25,
         paddingRight: 35,
         paddingLeft: 35,
+        position: 'absolute',
+        bottom: 0,
          
     }], 
   };
@@ -56,42 +82,26 @@ export default function MainNavigation() {
                 tabBarShowLabel: false,
                 headerShown: false,
             }} initialRouteName="Products">
-            <bottomTabs.Screen
-                options={{
-                    tabBarShowLabel: false,
-                    headerShown: false,
-                    tabBarIcon: ({ focused }) => (
-                        TabIconStyles(focused, require('./assets/icons8-barcode-64.png'))
-                    ),
-                }}
-                name="Scan"
-                component={AddProduct}
-            />
-
-            <bottomTabs.Screen options={{
-                tabBarShowLabel: false,
-                headerShown: false,
-                tabBarIcon: ({ focused }) => (
-                    TabIconStyles(focused, require('./assets/icons8-cuenco-de-arroz-96 (1).png'))
-
-                ),
-            }} name="Products" component={Products} />
-
-            <bottomTabs.Screen options={{
-                tabBarShowLabel: false,
-                headerShown: false,
-                tabBarIcon: ({ focused }) => (
-                    TabIconStyles(focused, require('./assets/icons8-libro-de-cocina-100.png'))
-                ),
-            }} name="Recipes" component={Recipes} />
-
-            <bottomTabs.Screen options={{
-                tabBarShowLabel: false,
-                headerShown: false,
-                tabBarIcon: ({ focused }) => (
-                    TabIconStyles(focused, require('./assets/icons8-ajustes-144.png'))
-                ),
-            }} name="UserSettings" component={UserSettings} />
+            {screens.map((screen, index) => (
+                <bottomTabs.Screen
+                    name={screen.name}
+                    component={screen.component}
+                    options={{
+                        tabBarShowLabel: false,
+                        headerShown: false,
+                        tabBarIcon: ({ focused }) => TabIconStyles(focused, screen.icon),
+                        tabBarButton: (props) => (
+                            <TouchableOpacity
+                                {...props}
+                                onPress={() => {
+                                    props.onPress();
+                                }}
+                            />
+                        ),
+                    }}
+                    key={index}
+                />
+            ))}
 
         </bottomTabs.Navigator>
 

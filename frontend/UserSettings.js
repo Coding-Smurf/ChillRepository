@@ -1,9 +1,9 @@
-import { View } from "react-native";
+import { SafeAreaView, Button } from "react-native";
 
 export default UserSettings = () => {
     return (
-        <View>
-            
-        </View>
+        <SafeAreaView style={{ height: '100%' }}>
+            <Button title="This Settings" onPress={() => { navigation.replace("MainView") }} />
+        </SafeAreaView>
     );
 }
