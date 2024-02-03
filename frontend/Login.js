@@ -21,6 +21,9 @@ const Login = ({ navigation }) => {
   const [passFocus, setPassFocus] = useState(false);
   const [isPassVisible, setIsPassVisible] = useState(false);
   const inputAnimation = useRef(new Animated.Value(0)).current;
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -55,14 +58,52 @@ const Login = ({ navigation }) => {
     ],
   };
 
+  const checkLogin = async () => {
+    // This method is called to check if the user credentials lineup with the dev database data, to check if requests are recieved.
+
+    const apiUrl = 'https://dark-ruby-brown-bear-sock.cyclic.app/';
+
+    try {
+      //set the loading state to true
+      setLoading(true);
+
+      //fetch the data from the api
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+
+      //use the response data to check if the username and password are correct
+      const resUsername = data[0].username;
+      const resPassword = data[0].password;
+
+      //if they are correct, navigate to the main view
+      if (username === resUsername && password === resPassword) {
+        navigation.navigate('MainView');
+      } else {
+        //if they are incorrect, display an error message
+        alert('Incorrect username or password');
+        setError(true);
+      }
+
+
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+
+    //set the loading state to false
+    setLoading(false);
+  };
+
   return (
     <SafeAreaView style={LoginStyles.container}>
+
       <View style={LoginStyles.header}>
         <TouchableHighlight style={LoginStyles.backIconWrapper} onPress={() => navigation.navigate('MainView')}>
           <Image style={LoginStyles.backIcon} source={require('./assets/icons8-left-arrow-100.png')} />
         </TouchableHighlight>
         <Text style={LoginStyles.textStyle}>Login</Text>
       </View>
+
       <TouchableWithoutFeedback onPress={() => { dismissKeyboard(); setPassFocus(false) }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === !'ios' ? 'height' : 'none'}
@@ -94,32 +135,27 @@ const Login = ({ navigation }) => {
               </TouchableHighlight>}
 
             </InsetShadow>
+
+
             <TouchableHighlight style={LoginStyles.button} onPress={() => {
               checkLogin();
-              navigation.navigate('MainView');
             }}>
               <Text style={LoginStyles.buttonText}>Submit</Text>
             </TouchableHighlight>
+            {error && <Text style={LoginStyles.error}>Username or Password incorrect</Text>}
           </Animated.View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      <Text style={LoginStyles.brand}>ALPACA © 2024</Text>
-    </SafeAreaView>
-  );
 
-  function checkLogin() {
-    // Fetch the backend API to check the login credentials
-    fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
-  }
+      <Text style={LoginStyles.brand}>ALPACA © 2024</Text>
+
+      {loading && <View style={LoginStyles.loaderWrapper}>
+        <Image style={LoginStyles.loader} source={require('./assets/SpinLoader.gif')} />
+      </View>}
+
+    </SafeAreaView>
+
+  );
 };
 
 export default Login;

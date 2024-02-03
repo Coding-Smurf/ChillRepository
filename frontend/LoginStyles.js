@@ -131,15 +131,35 @@ const LoginStyles = StyleSheet.create({
         fontFamily: 'lexend-regular',
     },
     eyeIcon: {
-        width: 35,
-        height: 35,
+        width: 25,
+        height: 25,
     },
     eyeIconWrapper: {
         justifyContent: 'center',
         left: -15,
     },
-
-
+    error: {
+        color: 'red',
+        fontFamily: 'lexend-light',
+        fontSize: 16,
+        textAlign: 'center',
+        marginTop: 20,
+    },
+    loader: {
+        width: 50,
+        height: 50,
+    },
+    loaderWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    },
 });
 
 export default LoginStyles;
